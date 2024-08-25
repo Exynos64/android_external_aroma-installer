@@ -21,8 +21,7 @@
  *
  */
 
-#include "minzip/Zip.h"
-#include "minzip/SysUtil.h"
+#include "../../libs/minzip/Zip.h"
 #include "../aroma.h"
 
 /*****************************[ GLOBAL VARIABLES ]*****************************/
@@ -31,13 +30,7 @@ static ZipArchive zip;
 /*********************************[ FUNCTIONS ]********************************/
 //-- AROMA ZIP Init
 byte az_init(const char * filename) {
-  MemMapping map;
-  if (sysMapFile(filename, &map) != 0) {
-    LOGE("failed to map file\n");
-    return -1;
-  }
-
-  if (mzOpenZipArchive(map.addr, map.length, &zip) != 0) {
+  if (mzOpenZipArchive(filename, &zip) != 0) {
     return 0;
   }
   

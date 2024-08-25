@@ -11,9 +11,14 @@ AROMA_CN := Flamboyan
 ## TARGET PATH
 AROMA_TARGET_PATH := $(PRODUCT_OUT)/aroma
 
-## MINUTF8 SOURCE FILE
+## MINUTF8 & MINZIP SOURCE FILES
 LOCAL_SRC_FILES += \
-    libs/minutf8/minutf8.c
+    libs/minutf8/minutf8.c \
+    libs/minzip/DirUtil.c \
+    libs/minzip/Hash.c \
+    libs/minzip/Inlines.c \
+    libs/minzip/SysUtil.c \
+    libs/minzip/Zip.c
 
 ## EDIFY PARSER SOURCE FILES
 LOCAL_SRC_FILES += \
@@ -62,8 +67,7 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/include \
     external/png \
     external/zlib \
-    external/freetype/include \
-    bootable/recovery
+    external/freetype/include
 LOCAL_MODULE_PATH := $(AROMA_TARGET_PATH)
 
 ## COMPILER FLAGS
@@ -82,7 +86,7 @@ LOCAL_CFLAGS += -DAROMA_BUILD="\"$(AROMA_BUILD)\""
 LOCAL_CFLAGS += -DAROMA_BUILD_CN="\"$(AROMA_CN)\""
 
 ## INCLUDED LIBRARIES
-LOCAL_STATIC_LIBRARIES := libminzip libpng libc libz libft2_aroma_static libm
+LOCAL_STATIC_LIBRARIES := libpng libc libz libft2_aroma_static libm
 
 ifeq ($(MAKECMDGOALS),$(LOCAL_MODULE))
     $(shell rm -rf $(PRODUCT_OUT)/obj/EXECUTABLES/$(LOCAL_MODULE)_intermediates)
