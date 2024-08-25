@@ -4,8 +4,8 @@
 
 ```sh
 export ALLOW_MISSING_DEPENDENCIES=true
-. build/envsetup.sh
-lunch full_yourdevice-eng
+source build/envsetup.sh
+lunch romprefix_yourdevice-eng
 make aroma_installer
 make aroma_installer_zip
 ```
@@ -15,13 +15,13 @@ like Wizard Installation, Touch User Interface (AROMA UI), Customizable Packages
 System Inspecting, Themeable, and User Interactive.
 
 * Programming Language
-  It was application which runs on Android device but not on Android OS 
+  It was application which runs on Android device but not on Android OS
   Environment that the native applications usually use Java.
   AROMA Installer use C (Pure C, not C++), so it may run on another
   platform like x86 with small modifications ofcourse.
 
 * Used Libraries
-  ZLIB - ofcourse, it was the most awesome thing in computer world 
+  ZLIB - ofcourse, it was the most awesome thing in computer world
   PNG, MinZIP, Freetype.
   All library need to compiled as static to make sure it runs
   without any dependency issue in any devices.
