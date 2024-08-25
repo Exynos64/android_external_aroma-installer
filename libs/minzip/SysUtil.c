@@ -152,7 +152,7 @@ int sysMapFileInShmem(int fd, MemMapping* pMap)
 int sysMapFileSegmentInShmem(int fd, off_t start, long length,
     MemMapping* pMap)
 {
-    off_t dummy;
+    loff_t dummy;
     size_t fileLength, actualLength;
     off_t actualStart;
     int adjust;
