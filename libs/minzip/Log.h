@@ -18,7 +18,10 @@
 
 // ---------------------------------------------------------------------
 
+#ifndef NDEBUG
 #define NDEBUG
+#endif
+
 #define LOG_NDEBUG 1
 
 /*
