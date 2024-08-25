@@ -78,6 +78,7 @@ LOCAL_CFLAGS += -Wl,--gc-sections -fPIC -DPIC
 LOCAL_CFLAGS += -D_AROMA_NODEBUG
 #LOCAL_CFLAGS += -D_AROMA_VERBOSE_INFO
 LOCAL_CFLAGS += -Wno-unused-function -Wno-unused-parameter -Wno-unused-variable -Wno-unused-value
+LOCAL_CFLAGS += -Wno-pointer-arith
 
 ## SET VERSION
 LOCAL_CFLAGS += -DAROMA_NAME="\"$(AROMA_NAME)\""
