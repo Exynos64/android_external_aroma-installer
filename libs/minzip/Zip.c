@@ -543,7 +543,7 @@ static bool processStoredEntry(const ZipArchive *pArchive,
         }
         n = read(pArchive->fd, buf, count);
         if (n < 0 || (size_t)n != count) {
-            LOGE("Can't read %zu bytes from zip file: %ld\n", count, n);
+            LOGE("Can't read %zu bytes from zip file: %zd\n", count, n);
             return false;
         }
         ret = processFunction(buf, n, cookie);
@@ -776,7 +776,7 @@ static bool writeProcessFunction(const unsigned char *data, int dataLen,
 {
     ssize_t n = write((int)fd, data, dataLen);
     if (n != dataLen) {
-        LOGE("Can't write %d bytes (only %ld) from zip file: %s\n",
+        LOGE("Can't write %d bytes (only %zd) from zip file: %s\n",
                 dataLen, n, strerror(errno));
         return false;
     }
