@@ -1,4 +1,5 @@
 LOCAL_PATH := $(call my-dir)
+
 include $(CLEAR_VARS)
 
 ## VERSIONING
@@ -67,8 +68,8 @@ LOCAL_C_INCLUDES := \
 LOCAL_MODULE_PATH := $(AROMA_INSTALLER_LOCALPATH)/out
 
 ## COMPILER FLAGS
-LOCAL_CFLAGS := -O2 
-LOCAL_CFLAGS += -DFT2_BUILD_LIBRARY=1 -DDARWIN_NO_CARBON 
+LOCAL_CFLAGS := -O2
+LOCAL_CFLAGS += -DFT2_BUILD_LIBRARY=1 -DDARWIN_NO_CARBON
 LOCAL_CFLAGS += -fdata-sections -ffunction-sections
 LOCAL_CFLAGS += -Wl,--gc-sections -fPIC -DPIC
 LOCAL_CFLAGS += -D_AROMA_NODEBUG
@@ -110,4 +111,5 @@ $(AROMA_ZIP_TARGET):
 	@echo "Made flashable aroma.zip: $@"
 
 .PHONY: aroma_installer_zip
+
 aroma_installer_zip: $(AROMA_ZIP_TARGET)
