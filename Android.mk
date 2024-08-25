@@ -8,8 +8,8 @@ AROMA_VERSION := 3.00b1
 AROMA_BUILD := $(shell date +%y%m%d%H)
 AROMA_CN := Flamboyan
 
-## LOCAL PATH COPY
-AROMA_INSTALLER_LOCALPATH := $(LOCAL_PATH)
+## TARGET PATH
+AROMA_TARGET_PATH := $(PRODUCT_OUT)/aroma
 
 ## MINUTF8 SOURCE FILE
 LOCAL_SRC_FILES += \
@@ -59,12 +59,12 @@ LOCAL_FORCE_STATIC_EXECUTABLE := true
 
 ## INCLUDES & OUTPUT PATH
 LOCAL_C_INCLUDES := \
-    $(AROMA_INSTALLER_LOCALPATH)/include \
+    $(LOCAL_PATH)/include \
     external/png \
     external/zlib \
     external/freetype/include \
     bootable/recovery
-LOCAL_MODULE_PATH := $(AROMA_INSTALLER_LOCALPATH)/out
+LOCAL_MODULE_PATH := $(AROMA_TARGET_PATH)
 
 ## COMPILER FLAGS
 LOCAL_CFLAGS := -O2
@@ -95,18 +95,18 @@ endif
 include $(BUILD_EXECUTABLE)
 
 # freetype
-include $(AROMA_INSTALLER_LOCALPATH)/libs/freetype/Android.mk
+include $(LOCAL_PATH)/libs/freetype/Android.mk
 
 include $(CLEAR_VARS)
 
-AROMA_ZIP_TARGET := $(AROMA_INSTALLER_LOCALPATH)/out/aroma.zip
+AROMA_ZIP_TARGET := $(AROMA_TARGET_PATH)/aroma.zip
 $(AROMA_ZIP_TARGET):
 	@echo "----- Making aroma zip installer ------"
-	$(hide) rm -rf $(AROMA_INSTALLER_LOCALPATH)/out/aroma.zip
-	$(hide) rm -rf $(AROMA_INSTALLER_LOCALPATH)/assets/META-INF/com/google/android/update-binary
-	$(hide) cp $(AROMA_INSTALLER_LOCALPATH)/out/aroma_installer $(AROMA_INSTALLER_LOCALPATH)/assets/META-INF/com/google/android/update-binary
-	$(hide) cd $(AROMA_INSTALLER_LOCALPATH)/assets && zip -r9 ../out/aroma.zip .
-	$(hide) rm -rf $(AROMA_INSTALLER_LOCALPATH)/assets/META-INF/com/google/android/update-binary
+	$(hide) rm -rf $(AROMA_TARGET_PATH)/out/aroma.zip
+	$(hide) rm -rf $(AROMA_TARGET_PATH)/assets/META-INF/com/google/android/update-binary
+	$(hide) cp $(AROMA_TARGET_PATH)/out/aroma_installer $(AROMA_TARGET_PATH)/assets/META-INF/com/google/android/update-binary
+	$(hide) cd $(AROMA_TARGET_PATH)/assets && zip -r9 ../out/aroma.zip .
+	$(hide) rm -rf $(AROMA_TARGET_PATH)/assets/META-INF/com/google/android/update-binary
 	@echo "Made flashable aroma.zip: $@"
 
 .PHONY: aroma_installer_zip
