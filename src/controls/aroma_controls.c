@@ -23,6 +23,8 @@
 #include <sched.h>
 #include "../aroma.h"
 
+extern void ui_clear_key_queue_ex();
+
 /***************************[ GLOBAL VARIABLES ]**************************/
 static AC_CONFIG acfg_var;
 static byte      on_dialog_window = 0;
