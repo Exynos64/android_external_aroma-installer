@@ -685,8 +685,6 @@ png_handle_IEND(png_structp png_ptr, png_infop info_ptr, png_uint_32 length)
       png_warning(png_ptr, "Incorrect IEND chunk length");
    }
    png_crc_finish(png_ptr, length);
-
-   info_ptr = info_ptr; /* Quiet compiler warnings about unused info_ptr */
 }
 
 #ifdef PNG_READ_gAMA_SUPPORTED
