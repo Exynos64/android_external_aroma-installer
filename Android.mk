@@ -8,7 +8,8 @@ AROMA_VERSION := 3.00b1
 AROMA_BUILD := $(shell date +%y%m%d%H)
 AROMA_CN := Flamboyan
 
-## TARGET PATH
+## AROMA PATHS
+AROMA_LOCAL_PATH  := $(LOCAL_PATH)
 AROMA_TARGET_PATH := $(PRODUCT_OUT)/aroma
 
 ## ZLIB SOURCE FILES
@@ -112,7 +113,7 @@ LOCAL_MODULE := aroma_installer
 LOCAL_FORCE_STATIC_EXECUTABLE := true
 
 ## INCLUDES & OUTPUT PATH
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
+LOCAL_C_INCLUDES := $(AROMA_LOCAL_PATH)/include
 LOCAL_MODULE_PATH := $(AROMA_TARGET_PATH)
 
 ## COMPILER FLAGS
@@ -150,11 +151,11 @@ include $(CLEAR_VARS)
 AROMA_ZIP_TARGET := $(AROMA_TARGET_PATH)/aroma.zip
 $(AROMA_ZIP_TARGET):
 	@echo "----- Making aroma zip installer ------"
-	$(hide) rm -rf $(AROMA_TARGET_PATH)/out/aroma.zip
-	$(hide) rm -rf $(AROMA_TARGET_PATH)/assets/META-INF/com/google/android/update-binary
-	$(hide) cp $(AROMA_TARGET_PATH)/out/aroma_installer $(AROMA_TARGET_PATH)/assets/META-INF/com/google/android/update-binary
-	$(hide) cd $(AROMA_TARGET_PATH)/assets && zip -r9 ../out/aroma.zip .
-	$(hide) rm -rf $(AROMA_TARGET_PATH)/assets/META-INF/com/google/android/update-binary
+	$(hide) rm -rf $(AROMA_TARGET_PATH)/assets/
+	$(hide) rm -f $(AROMA_TARGET_PATH)/aroma.zip
+	$(hide) cp -R $(AROMA_LOCAL_PATH)/assets/ $(AROMA_TARGET_PATH)/assets/
+	$(hide) cp $(AROMA_TARGET_PATH)/aroma_installer $(AROMA_TARGET_PATH)/assets/META-INF/com/google/android/update-binary
+	$(hide) pushd $(AROMA_TARGET_PATH)/assets/ && zip -r9 ../aroma.zip . && popd
 	@echo "Made flashable aroma.zip: $@"
 
 .PHONY: aroma_installer_zip
