@@ -29,6 +29,11 @@
 
 extern byte ag_blur(CANVAS * d, CANVAS * s, int radius);
 
+typedef struct yy_buffer_state * YY_BUFFER_STATE;
+#define yyconst const
+extern YY_BUFFER_STATE yy_scan_string (yyconst char * yystr );
+extern int yyparse (Expr ** root, int * error_count);
+
 //*
 //* GLOBAL UI VARIABLES
 //*
@@ -3535,7 +3540,7 @@ Value * AROMA_INCLUDE(const char * name, State * state, int argc, Expr * argv[])
     return ErrorAbort(state, "%s() File to include %s not found", name, fname);
   }
   
-  char * script_data = script_installer.data;
+  char * script_data = (char *)script_installer.data;
   
   if (script_installer.sz > 3) {
     //-- Check UTF-8 File Header
@@ -3748,7 +3753,7 @@ byte aui_start() {
     return 0;
   }
   
-  char * script_data = script_installer.data;
+  char * script_data = (char *)script_installer.data;
   
   if (script_installer.sz > 3) {
     //-- Check UTF-8 File Header
