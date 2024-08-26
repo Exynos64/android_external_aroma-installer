@@ -28,6 +28,8 @@
 #include <pthread.h>
 #include "../aroma.h"
 
+extern void apng_closefont(PNGFONTS * p);
+
 /*****************************[ GLOBAL VARIABLES ]*****************************/
 static int                             ag_fb   = 0;       //-- FrameBuffer Handler
 static dword                           ag_fbsz = 0;
