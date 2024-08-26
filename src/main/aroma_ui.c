@@ -448,7 +448,7 @@ char * aui_readfromzip(char * name) {
     return NULL;
   }
   
-  return filedata.data;
+  return (char *)filedata.data;
 }
 
 //*
@@ -733,7 +733,7 @@ Value * AROMA_FILEGETPROP(const char * name, State * state, int argc, Expr * arg
   //-- Get Arguments
   _INITARGS();
   //-- Parse The Prop
-  char * result;
+  char * result = NULL;
   
   if (strcmp(name, "file_getprop") == 0) {
     result = aui_parseprop(args[0], args[1]);
