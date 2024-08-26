@@ -2,7 +2,7 @@
 
 /* NEON SIMD 16bit to 32bit BLT */
 void aBlt32_neon(int n, dword * dst, const word * src, byte clset) {
-  int i;
+  int i = 0;
   
   /* use non simd */
   if (n < 8) {
