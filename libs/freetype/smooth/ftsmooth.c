@@ -267,6 +267,8 @@
         FT_Int prevtotal, nexttotal, lefttotal, righttotal, sidesdiff,
           prevdiff, nextdiff, sp11, sp21, sp31, sp12, sp22, sp32,
           sp13, sp23, sp33;
+        sp13 = 0;
+        sp33 = 0;
 
         sp12 = line [xx-1];
         sp22 = line [xx];
@@ -669,6 +671,8 @@
         FT_Int prevtotal, nexttotal, lefttotal, righttotal, sidesdiff,
           leftdiff, rightdiff, prevdiff, nextdiff, sp11, sp21, sp31,
           sp12, sp22, sp32, sp13, sp23, sp33;
+        sp13 = 0;
+        sp33 = 0;
 
         sp12 = line [xx-1];
         sp22 = line [xx];
@@ -2174,119 +2178,121 @@
       /*store and/or replace highest occurrences with 3 or more centers */
       /* because this matched, it will become the top dog regardless */
       if ( stem_detected )
-      if ( stem_matches > possible_stems[0].height )
       {
-        /* if this is the first stem just go ahead */
-        if (valid_possible_stems == 0)
+        if ( stem_matches > possible_stems[0].height )
         {
-          valid_possible_stems = 1;
-          possible_stems[0].center = set_center_to;
-          possible_stems[0].count  = stem_matches;
-          possible_stems[0].width  = set_width_to;
-          possible_stems[0].height = stem_matches;
-        }
-
-        /* otherwise, if there is already a stem */
-        else if (valid_possible_stems == 1 )
-        {
-          /* if the stem is within the range of existing one, replace existing one */
-
-          /* if the stem isn't within the range of this one swap it with next one first */
-          if (abs(set_center_to - possible_stems[0].center) >= one_pixel * 2)
+          /* if this is the first stem just go ahead */
+          if (valid_possible_stems == 0)
           {
-            swap_stem ( &possible_stems[0], &possible_stems[1] );
-            valid_possible_stems = 2;
-          }
-          possible_stems[0].center = set_center_to;
-          possible_stems[0].count  = stem_matches;
-          possible_stems[0].width  = set_width_to;
-          possible_stems[0].height = stem_matches;
-        }
-
-        /* otherwise if there are already 2 stems */
-        else if (valid_possible_stems >= 2 )
-        {
-          /* if the stem is within the range of existing one, replace existing one */
-          if ( abs(set_center_to - possible_stems[0].center) <= one_pixel * 2)
-          {
+            valid_possible_stems = 1;
             possible_stems[0].center = set_center_to;
             possible_stems[0].count  = stem_matches;
             possible_stems[0].width  = set_width_to;
             possible_stems[0].height = stem_matches;
           }
-          /* if the stem isn't within the range of this one */
-          else
+
+          /* otherwise, if there is already a stem */
+          else if (valid_possible_stems == 1 )
           {
-            /* see if within range of next one and swap if so and proceed overwriting it */
-            if ( abs(set_center_to - possible_stems[1].center) <= one_pixel * 2)
+            /* if the stem is within the range of existing one, replace existing one */
+
+            /* if the stem isn't within the range of this one swap it with next one first */
+            if (abs(set_center_to - possible_stems[0].center) >= one_pixel * 2)
             {
               swap_stem ( &possible_stems[0], &possible_stems[1] );
-            }
-
-            /* otherwise see if in range of third one */
-            else if ( abs(set_center_to - possible_stems[2].center) <= one_pixel * 2)
-            {
-              swap_stem ( &possible_stems[0], &possible_stems[2] );
-            }
-
-            /* otherwise this is the new top dog, so demote everything */
-            else
-            {
-              swap_stem ( &possible_stems[1], &possible_stems[2] );
-              swap_stem ( &possible_stems[0], &possible_stems[1] );
-              valid_possible_stems += 1;
+              valid_possible_stems = 2;
             }
             possible_stems[0].center = set_center_to;
             possible_stems[0].count  = stem_matches;
             possible_stems[0].width  = set_width_to;
             possible_stems[0].height = stem_matches;
           }
-        }
-      }
 
-      else if ( stem_matches > possible_stems[1].height  && set_center_to != 0)
-      {
-
-        /* make sure it doesn't match the first stem */
-        if ( abs(set_center_to - possible_stems[0].center) >= one_pixel * 2 )
-        {
-
-          /* if this is the second stem */
-          if (valid_possible_stems == 1)  valid_possible_stems = 2;
-
-          /* otherwise if there is already a stem here */
+          /* otherwise if there are already 2 stems */
           else if (valid_possible_stems >= 2 )
           {
-            /* if it doesn't match the second stem, proceed to swap out with the third */
-            /* if it does, replace it */
-            if ( abs(set_center_to - possible_stems[1].center) >= one_pixel * 2 )
+            /* if the stem is within the range of existing one, replace existing one */
+            if ( abs(set_center_to - possible_stems[0].center) <= one_pixel * 2)
             {
-              swap_stem ( &possible_stems[1], &possible_stems[2] );
-              valid_possible_stems +=1;
+              possible_stems[0].center = set_center_to;
+              possible_stems[0].count  = stem_matches;
+              possible_stems[0].width  = set_width_to;
+              possible_stems[0].height = stem_matches;
+            }
+            /* if the stem isn't within the range of this one */
+            else
+            {
+              /* see if within range of next one and swap if so and proceed overwriting it */
+              if ( abs(set_center_to - possible_stems[1].center) <= one_pixel * 2)
+              {
+                swap_stem ( &possible_stems[0], &possible_stems[1] );
+              }
+
+              /* otherwise see if in range of third one */
+              else if ( abs(set_center_to - possible_stems[2].center) <= one_pixel * 2)
+              {
+                swap_stem ( &possible_stems[0], &possible_stems[2] );
+              }
+
+              /* otherwise this is the new top dog, so demote everything */
+              else
+              {
+                swap_stem ( &possible_stems[1], &possible_stems[2] );
+                swap_stem ( &possible_stems[0], &possible_stems[1] );
+                valid_possible_stems += 1;
+              }
+              possible_stems[0].center = set_center_to;
+              possible_stems[0].count  = stem_matches;
+              possible_stems[0].width  = set_width_to;
+              possible_stems[0].height = stem_matches;
             }
           }
-          possible_stems[1].center = set_center_to;
-          possible_stems[1].count  = stem_matches;
-          possible_stems[1].width  = set_width_to;
-          possible_stems[1].height = stem_matches;
         }
-      }
 
-      else if ( stem_matches > possible_stems[2].height && set_center_to != 0)
-      {
-        /* if it doesn't match the first or second one */
-        if ( abs(set_center_to - possible_stems[0].center) >= one_pixel * 2
-          && abs(set_center_to - possible_stems[1].center) >= one_pixel * 2)
-
+        else if ( stem_matches > possible_stems[1].height  && set_center_to != 0)
         {
-          if (valid_possible_stems == 2)
+
+          /* make sure it doesn't match the first stem */
+          if ( abs(set_center_to - possible_stems[0].center) >= one_pixel * 2 )
           {
-            valid_possible_stems += 1;
+
+            /* if this is the second stem */
+            if (valid_possible_stems == 1)  valid_possible_stems = 2;
+
+            /* otherwise if there is already a stem here */
+            else if (valid_possible_stems >= 2 )
+            {
+              /* if it doesn't match the second stem, proceed to swap out with the third */
+              /* if it does, replace it */
+              if ( abs(set_center_to - possible_stems[1].center) >= one_pixel * 2 )
+              {
+                swap_stem ( &possible_stems[1], &possible_stems[2] );
+                valid_possible_stems +=1;
+              }
+            }
+            possible_stems[1].center = set_center_to;
+            possible_stems[1].count  = stem_matches;
+            possible_stems[1].width  = set_width_to;
+            possible_stems[1].height = stem_matches;
           }
-          possible_stems[2].center = set_center_to;
-          possible_stems[2].count  = stem_matches;
-          possible_stems[2].width  = set_width_to;
-          possible_stems[1].height = stem_matches;
+        }
+
+        else if ( stem_matches > possible_stems[2].height && set_center_to != 0)
+        {
+          /* if it doesn't match the first or second one */
+          if ( abs(set_center_to - possible_stems[0].center) >= one_pixel * 2
+            && abs(set_center_to - possible_stems[1].center) >= one_pixel * 2)
+
+          {
+            if (valid_possible_stems == 2)
+            {
+              valid_possible_stems += 1;
+            }
+            possible_stems[2].center = set_center_to;
+            possible_stems[2].count  = stem_matches;
+            possible_stems[2].width  = set_width_to;
+            possible_stems[1].height = stem_matches;
+          }
         }
       }
       if (valid_possible_stems > 3) valid_possible_stems = 3;
@@ -3335,9 +3341,9 @@ RERENDER:
             FT_Outline_EmboldenXY( outline, global_embolden_x_value, global_embolden_y_value );
 
       if( (bold_embolden_x_value != 0 || bold_embolden_y_value != 0)
-        && (slot->face->style_name
+        && ( (slot->face->style_name
           && ( strcasestr(slot->face->style_name, "Bold")
-            || strcasestr(slot->face->style_name, "Black") )
+            || strcasestr(slot->face->style_name, "Black") ) )
           || ( slot->face->style_flags
             && slot->face->style_flags & FT_STYLE_FLAG_BOLD ) ) )
             FT_Outline_EmboldenXY( outline, bold_embolden_x_value, bold_embolden_y_value );
