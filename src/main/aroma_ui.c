@@ -27,6 +27,8 @@
 
 #define APARSE_MAXHISTORY 256
 
+extern byte ag_blur(CANVAS * d, CANVAS * s, int radius);
+
 //*
 //* GLOBAL UI VARIABLES
 //*
