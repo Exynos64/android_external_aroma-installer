@@ -54,6 +54,8 @@ byte alib_copy(char * src, char * dst) {
   ssize_t  numRead;
   char     buf[1024];
   byte     ret = 2;
+  iFd = -1;
+  oFd = -1;
   iFd = open(src, O_RDONLY);
   
   if (iFd == -1) {
@@ -428,7 +430,7 @@ byte akinetic_uphandler(AKINETIC * p, int mouseY) {
 int akinetic_fling(AKINETIC * p) {
   p->velocity = p->velocity * AKINETIC_DAMPERING;
   
-  if (abs(p->velocity) < 0.1) {
+  if (fabs(p->velocity) < 0.1) {
     return 0;
   }
   
@@ -437,7 +439,7 @@ int akinetic_fling(AKINETIC * p) {
 int akinetic_fling_dampered(AKINETIC * p, float dampersz) {
   p->velocity = p->velocity * dampersz;
   
-  if (abs(p->velocity) < 0.1) {
+  if (fabs(p->velocity) < 0.1) {
     return 0;
   }
   
