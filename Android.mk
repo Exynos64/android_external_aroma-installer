@@ -60,10 +60,10 @@ LOCAL_FORCE_STATIC_EXECUTABLE := true
 ## INCLUDES & OUTPUT PATH
 LOCAL_C_INCLUDES := \
     $(AROMA_INSTALLER_LOCALPATH)/include \
+    $(AROMA_INSTALLER_LOCALPATH)/libs \
     external/png \
     external/zlib \
-    external/freetype/include \
-    bootable/recovery
+    external/freetype/include
 LOCAL_MODULE_PATH := $(AROMA_INSTALLER_LOCALPATH)/out
 
 ## COMPILER FLAGS
@@ -96,6 +96,9 @@ include $(BUILD_EXECUTABLE)
 
 # freetype
 include $(AROMA_INSTALLER_LOCALPATH)/libs/freetype/Android.mk
+
+# minzip
+include $(AROMA_INSTALLER_LOCALPATH)/libs/minzip/Android.mk
 
 include $(CLEAR_VARS)
 
