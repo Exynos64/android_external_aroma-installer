@@ -9,10 +9,10 @@ LOCAL_SRC_FILES := \
 	Zip.c
 
 LOCAL_C_INCLUDES := \
-	external/zlib \
-	external/safe-iop/include
+	$(LOCAL_PATH)/safe-iop/include \
+	external/zlib
 
-LOCAL_STATIC_LIBRARIES := libselinux
+LOCAL_STATIC_LIBRARIES := libselinux libsafe_iop
 
 LOCAL_MODULE := libminzip
 
@@ -21,3 +21,5 @@ LOCAL_CLANG := true
 LOCAL_CFLAGS += -Werror -Wall
 
 include $(BUILD_STATIC_LIBRARY)
+
+include $(LOCAL_PATH)/safe-iop/Android.mk
